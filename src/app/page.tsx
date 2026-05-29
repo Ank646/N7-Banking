@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import Navbar from "@/app/components/Navbar";
 import HeroSection from "@/app/components/HeroSection";
 import TrustSection from "@/app/components/TrustSection";
-import StatsSection from "@/app/components/StatsSection";
+import WhyN7Section from "@/app/components/WhyN7Section";
 import DashboardPreview from "@/app/components/DashboardPreview";
-import FeaturesSection from "@/app/components/FeaturesSection";
+import CoreBankingSection from "@/app/components/CoreBankingSection";
 import CTASection from "@/app/components/CTASection";
+import Frame38Separator from "@/app/components/Frame38Separator";
 import MobileSection from "@/app/components/MobileSection";
+import InsightsSection from "@/app/components/InsightsSection";
 import CaseStudies from "@/app/components/CaseStudies";
+import { NewsletterStrip } from "@/app/components/CTASection";
 import Footer from "@/app/components/Footer";
 
 export const metadata: Metadata = {
@@ -19,15 +22,25 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="bg-[#050C17] min-h-screen">
+      {/* ── Dark page 1 ───────────────────────────────────────── */}
       <Navbar />
       <HeroSection />
       <TrustSection />
-      <StatsSection />
+      <WhyN7Section />
       <DashboardPreview />
-      <FeaturesSection />
+      <CoreBankingSection />
       <CTASection />
+
+      {/* ── Frame 38 separator (ticker) ───────────────────────── */}
+      <Frame38Separator />
+
+      {/* ── White page: Digital banking + Frame 85 phones ──────── */}
       <MobileSection />
+
+      {/* ── Dark page 2 ───────────────────────────────────────── */}
+      <InsightsSection />
       <CaseStudies />
+      <NewsletterStrip />
       <Footer />
     </main>
   );

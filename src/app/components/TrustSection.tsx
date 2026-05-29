@@ -3,51 +3,32 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const companies = [
-  "HSBC",
-  "Standard Chartered",
-  "ING Direct",
-  "Revolut",
-  "N26",
-  "Starling Bank",
-  "Monzo",
-  "Wise",
-  "Stripe",
-  "Adyen",
-  "Klarna",
-  "Chime",
-];
+const companies = ["HSBC", "Standard Chartered", "ING Direct", "Revolut", "N26", "Starling Bank", "Monzo", "Wise", "Stripe", "Adyen", "Klarna", "Chime"];
+const doubled = [...companies, ...companies];
 
 export default function TrustSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const allCompanies = [...companies, ...companies];
+  const isInView = useInView(ref, { once: true });
 
   return (
-    <section className="py-12 border-y border-white/5 bg-[#050C17]/50">
-      <div className="container-custom">
+    <section ref={ref} className="py-10 border-y border-white/[0.05] bg-[#050C17]/80">
+      <div className="container-custom mb-6">
         <motion.p
-          ref={ref}
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center text-slate-500 text-sm uppercase tracking-widest mb-8"
+          className="text-center text-slate-500 text-xs uppercase tracking-widest"
         >
-          Trusted by 500+ financial institutions worldwide
+          Trusted by leading financial institutions worldwide
         </motion.p>
-
-        <div className="overflow-hidden">
-          <div className="flex gap-0 animate-marquee whitespace-nowrap">
-            {allCompanies.map((name, index) => (
-              <span
-                key={index}
-                className="font-semibold text-slate-600 hover:text-slate-400 transition-colors text-lg px-8 cursor-default"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
+      </div>
+      <div className="overflow-hidden">
+        <div className="flex animate-marquee whitespace-nowrap">
+          {doubled.map((name, i) => (
+            <span key={i} className="text-slate-600 hover:text-slate-400 transition-colors font-semibold text-base px-8 cursor-default">
+              {name}
+            </span>
+          ))}
         </div>
       </div>
     </section>

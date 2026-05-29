@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Platform", href: "#platform" },
   { label: "Solutions", href: "#solutions" },
-  { label: "Customers", href: "#customers" },
+  { label: "Products", href: "#products" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Docs", href: "#docs" },
+  { label: "About", href: "#about" },
+  { label: "Blog", href: "#blog" },
 ];
 
 export default function Navbar() {
@@ -17,30 +17,29 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
   }, []);
 
   return (
     <>
-      <header
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "backdrop-blur-xl bg-[#050C17]/80 border-b border-white/5"
+            ? "backdrop-blur-xl bg-[#050C17]/85 border-b border-white/[0.06] shadow-lg shadow-black/20"
             : "bg-transparent"
         }`}
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* LEFT: Logo */}
-            <a href="/" className="flex items-center gap-2">
+            {/* Logo */}
+            <a href="#" className="flex items-center gap-2">
               <span className="relative flex items-center gap-1.5">
-                <span className="font-black text-2xl bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent tracking-tight">
-                  N7
-                </span>
+                <span className="font-black text-2xl gradient-text tracking-tight">N7</span>
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400" />
@@ -48,90 +47,65 @@ export default function Navbar() {
               </span>
             </a>
 
-            {/* CENTER: Desktop nav links */}
-            <nav className="hidden md:flex items-center gap-8">
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative text-sm font-medium text-white/70 hover:text-blue-400 transition-colors duration-200 group"
+                  className="relative px-4 py-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-blue-400 transition-all duration-200 group-hover:w-full" />
+                  <span className="absolute bottom-1 left-4 right-4 h-px bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
                 </a>
               ))}
             </nav>
 
-            {/* RIGHT: CTA buttons (desktop) */}
-            <div className="hidden md:flex items-center gap-4">
-              <a
-                href="#signin"
-                className="text-sm font-medium text-white/70 hover:text-white transition-colors duration-200"
-              >
-                Sign in
-              </a>
-              <a
-                href="#get-started"
-                className="text-sm font-semibold px-5 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white transition-all duration-200 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30"
-              >
-                Get Started
+            {/* CTA */}
+            <div className="hidden md:flex items-center gap-3">
+              <a href="#" className="btn-primary text-sm inline-flex items-center gap-2 px-5 py-2.5">
+                Discover
               </a>
             </div>
 
             {/* Mobile hamburger */}
             <button
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-colors duration-200"
-              onClick={() => setMobileOpen((prev) => !prev)}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMobileOpen((v) => !v)}
+              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
-      {/* Mobile nav overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            key="mobile-nav"
-            initial={{ opacity: 0, y: -16 }}
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed inset-0 z-40 flex flex-col backdrop-blur-xl bg-[#050C17]/95 pt-16"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-16 z-40 backdrop-blur-xl bg-[#050C17]/95 border-b border-white/[0.06] md:hidden"
           >
-            <nav className="flex flex-col mt-4">
+            <div className="container-custom py-4 flex flex-col">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.label}
                   href={link.href}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i, duration: 0.2 }}
-                  className="py-4 px-6 text-lg font-medium text-white/80 hover:text-blue-400 hover:bg-white/5 border-b border-white/5 transition-colors duration-200"
+                  transition={{ delay: i * 0.05 }}
                   onClick={() => setMobileOpen(false)}
+                  className="py-4 px-2 text-slate-300 hover:text-white border-b border-white/5 text-base font-medium transition-colors"
                 >
                   {link.label}
                 </motion.a>
               ))}
-            </nav>
-
-            <div className="flex flex-col gap-3 px-6 mt-8">
-              <a
-                href="#signin"
-                className="w-full text-center py-3 rounded-lg text-sm font-medium text-white/70 hover:text-white border border-white/10 hover:border-white/20 transition-colors duration-200"
-                onClick={() => setMobileOpen(false)}
-              >
-                Sign in
-              </a>
-              <a
-                href="#get-started"
-                className="w-full text-center py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 text-white transition-all duration-200 shadow-lg shadow-blue-500/20"
-                onClick={() => setMobileOpen(false)}
-              >
-                Get Started
-              </a>
+              <div className="mt-5 pb-2">
+                <a href="#" className="btn-primary text-sm text-center block py-3">Discover</a>
+              </div>
             </div>
           </motion.div>
         )}
