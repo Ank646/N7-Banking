@@ -4,13 +4,14 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import Image from "next/image";
-import { NewsletterStrip } from "./CTASection";
+import { CTABanner } from "./CTASection";
+import Frame38Separator from "./Frame38Separator";
 
-const phoneRows = [
+const rows = [
   {
-    phone: "/iphone-home.png",
-    phoneAlt: "N7 App Home",
-    side: "right",
+    phoneImg: "/iphone-home.png",
+    phoneAlt: "Fully compliant",
+    phoneSide: "left" as const,
     title: "Fully compliant with regulatory requirement",
     desc: "The governance of risk management with regulations is achieved by our risk management framework that is fully integrated to work with digital bank's operational risk protocols and practices.",
     bullets: [
@@ -20,9 +21,9 @@ const phoneRows = [
     ],
   },
   {
-    phone: "/iphone-transaction.png",
-    phoneAlt: "N7 App Transactions",
-    side: "left",
+    phoneImg: "/iphone-transaction.png",
+    phoneAlt: "No legacy IT",
+    phoneSide: "right" as const,
     title: "No legacy IT systems",
     desc: "Our Digital Banking solution and multidimensional platform help financial institutions take advantage of digital transformation by ensuring customer trust and regulatory compliance.",
     bullets: [
@@ -32,128 +33,269 @@ const phoneRows = [
     ],
   },
   {
-    phone: "/iphone-profile.png",
-    phoneAlt: "N7 App Profile",
-    side: "right",
+    phoneImg: "/iphone-profile.png",
+    phoneAlt: "No traditional branches",
+    phoneSide: "left" as const,
     title: "No traditional branches",
-    desc: "Our Digital Banking out of the box helps financial institutions take the operational costs for a seamless, frictionless experience.",
+    desc: "Our Digital Banking out of the box helps you to accelerate innovation while reducing risks and optimising operational costs for a seamless, branchless experience.",
     bullets: [
       "Branchless & Paperless Banking",
       "Digital Transformation Capability",
-      "Connected, Adaptable and Scalable",
+      "Optimised, Adaptable and Scalable",
     ],
   },
 ];
 
-function PhoneFeatureRow({ row, idx }: { row: typeof phoneRows[0]; idx: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const phoneFirst = row.side === "left";
-
-  return (
-    <section ref={ref} className={`py-20 ${idx % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
-      <div className="container-custom">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center`}>
-          {/* Phone */}
-          <motion.div
-            initial={{ opacity: 0, x: phoneFirst ? -30 : 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: phoneFirst ? 0.1 : 0 }}
-            className={`flex justify-center relative ${phoneFirst ? "" : "lg:order-2"}`}
-          >
-            <div className="absolute inset-0 bg-blue-200/20 rounded-full blur-3xl scale-75 pointer-events-none" />
-            <Image
-              src={row.phone}
-              alt={row.phoneAlt}
-              width={260}
-              height={520}
-              className="h-auto object-contain drop-shadow-2xl relative"
-              style={{ maxHeight: 520 }}
-            />
-          </motion.div>
-
-          {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: phoneFirst ? 30 : -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: phoneFirst ? 0 : 0.1 }}
-            className={phoneFirst ? "" : "lg:order-1"}
-          >
-            <h3 className="text-3xl lg:text-4xl font-black text-gray-900 leading-tight mb-4">
-              {row.title}
-            </h3>
-            <p className="text-gray-500 text-base leading-relaxed mb-6">{row.desc}</p>
-            <ul className="space-y-3">
-              {row.bullets.map((b) => (
-                <li key={b} className="flex items-center gap-3 text-sm text-gray-700">
-                  <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                    <Check size={11} className="text-white" strokeWidth={3} />
-                  </span>
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function MobileSection() {
-  const heroRef = useRef(null);
-  const heroInView = useInView(heroRef, { once: true, margin: "-80px" });
+  const leftRef = useRef(null);
+  const leftInView = useInView(leftRef, { once: true, margin: "-60px" });
 
   return (
     <div>
-      {/* Hero "Digital banking out of the box" */}
-      <section ref={heroRef} className="bg-gray-50 pt-24 pb-16">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4">
-                Digital banking<br />
-                <span className="text-blue-600">out of the box.</span>
-              </h2>
-              <p className="text-gray-500 text-base leading-relaxed mb-8">
-                Give your customers the modern banking experience they deserve. N7&apos;s white-label mobile app ships with everything pre-built — cards, transfers, analytics, and more.
-              </p>
-              <a href="#" className="inline-flex items-center gap-2 px-7 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors">
+      
+      <Frame38Separator />
+
+      <div className="bg-white">
+        
+        <div className="w-full max-w-[1400px] mx-auto">
+          
+          <motion.div
+            ref={leftRef}
+            initial={{ opacity: 0, y: 16 }}
+            animate={leftInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="lg:hidden px-6 pt-14 pb-10 text-center"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 leading-tight mb-4">
+              Digital banking<br />out-of-the-box
+            </h2>
+            <p className="text-gray-500 text-sm leading-relaxed mb-8 max-w-sm mx-auto">
+              N7 helps your financial institution improve the client experience, automate and optimize procedures
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <a
+                href="#"
+                className="inline-flex items-center justify-center px-8 py-3 rounded-lg text-white text-lg font-bold tracking-widest uppercase transition-all hover:opacity-90"
+                style={{ background: "linear-gradient(135deg, #3B82F6, #1D4ED8)" }}
+              >
                 Request Demo
-                <ArrowRight size={15} />
+              </a>
+              <a href="#" className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-blue-600 hover:text-blue-500 transition-colors">
+                LEARN MORE <ArrowRight size={11} />
+              </a>
+            </div>
+          </motion.div>
+
+          
+          <div className="lg:hidden relative overflow-hidden">
+            
+            <Image
+              src="/N7.png"
+              alt="" aria-hidden="true"
+              width={800} height={340}
+              className="absolute pointer-events-none select-none object-contain w-full"
+              style={{ top: "5%", left: 0, zIndex: 0, opacity: 0.4, mixBlendMode: "multiply" }}
+            />
+            <div className="relative z-10">
+              {rows.map((row, idx) => (
+                <PhoneRow key={row.title} row={row} idx={idx} />
+              ))}
+            </div>
+          </div>
+
+          
+          <div className="relative hidden lg:grid lg:grid-cols-[30%_70%] overflow-hidden">
+
+            
+            <Image
+              src="/N7.png"
+              alt="" aria-hidden="true"
+              width={1200} height={500}
+              className="absolute pointer-events-none select-none object-contain"
+              style={{
+                top: "1%",
+                left: "15%",
+                width: "50%",
+                zIndex: 0,
+                opacity: 0.5,
+                mixBlendMode: "multiply",
+              }}
+            />
+
+            
+            <motion.div
+              ref={leftRef}
+              initial={{ opacity: 0, x: -20 }}
+              animate={leftInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="relative z-10 px-8 lg:pl-16 lg:pr-8 pt-20 pb-10 border-r border-gray-100 lg:sticky lg:top-20 lg:self-start"
+            >
+              <h2 className="text-4xl font-bold text-gray-900 leading-tight mb-5">
+                Digital banking<br />out-of-the-box
+              </h2>
+              <p className="text-gray-500 text-sm leading-relaxed mb-8">
+                N7 helps your financial institution improve the client experience, automate and optimize procedures
+              </p>
+              <a
+                href="#"
+                className="inline-flex items-center justify-center px-8 py-3 rounded-lg text-white text-xs font-bold tracking-widest uppercase transition-all mr-4 hover:opacity-90 mb-4 block w-fit"
+                style={{ background: "linear-gradient(135deg, #3B82F6, #1D4ED8)" }}
+              >
+                Request Demo
+              </a>
+              <a href="#" className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-blue-600 hover:text-blue-500 transition-colors">
+                LEARN MORE <ArrowRight size={11} />
               </a>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={heroInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="flex justify-center relative"
-            >
-              <div className="absolute inset-0 bg-blue-200/20 rounded-full blur-3xl scale-75 pointer-events-none" />
-              <Image
-                src="/iphone-home.png"
-                alt="N7 Mobile Banking App"
-                width={280}
-                height={560}
-                className="h-auto object-contain drop-shadow-2xl relative"
-                style={{ maxHeight: 520 }}
-              />
-            </motion.div>
+
+            
+            <div className="relative z-10">
+              {rows.map((row, idx) => (
+                <PhoneRow key={row.title} row={row} idx={idx} />
+              ))}
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* 3 phone feature rows (Frame 85) */}
-      {phoneRows.map((row, idx) => (
-        <PhoneFeatureRow key={row.title} row={row} idx={idx} />
-      ))}
+        
+        <div className="bg-white px-6 lg:px-10 pt-8 pb-12">
+          <CTABanner brand="N7" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
-      {/* Embedded CTA strip */}
-      <NewsletterStrip />
+function PhoneRow({
+  row,
+  idx,
+}: {
+  row: typeof rows[0];
+  idx: number;
+}) {
+  const ref = useRef(null);
+
+  const isInView = useInView(ref, {
+    once: true,
+    margin: "-80px",
+  });
+
+  const phoneLeft = row.phoneSide === "left";
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+    >
+      <div className="grid grid-cols-2 items-center min-h-[520px]">
+
+        
+        <motion.div
+          initial={{
+            opacity: 0,
+            x: phoneLeft ? -20 : 20,
+          }}
+          animate={
+            isInView
+              ? {
+                  opacity: 1,
+                  x: 0,
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.6,
+          }}
+          className={`
+            flex
+            justify-center
+            py-12
+            px-6
+            ${phoneLeft ? "order-1" : "order-2"}
+          `}
+        >
+          <Image
+            src={row.phoneImg}
+            alt={row.phoneAlt}
+            width={320}
+            height={650}
+            className="
+              h-auto
+              object-contain
+              drop-shadow-2xl
+            "
+          />
+        </motion.div>
+
+        
+        <motion.div
+          initial={{
+            opacity: 0,
+            x: phoneLeft ? 20 : -20,
+          }}
+          animate={
+            isInView
+              ? {
+                  opacity: 1,
+                  x: 0,
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.6,
+            delay: 0.1,
+          }}
+          className={`
+            py-12
+            px-12
+            ${phoneLeft ? "order-2" : "order-1"}
+          `}
+        >
+          <h3 className="text-[32px] font-medium text-gray-900 leading-[1.15] mb-5">
+            {row.title}
+          </h3>
+
+          <p className="text-gray-500 text-[15px] leading-7 mb-8 max-w-[420px]">
+            {row.desc}
+          </p>
+
+          <ul className="space-y-5">
+            {row.bullets.map((b) => (
+              <li
+                key={b}
+                className="flex items-start gap-3"
+              >
+                <span
+                  className="
+                    flex-shrink-0
+                    w-5
+                    h-5
+                    rounded-full
+                    flex
+                    items-center
+                    justify-center
+                    mt-1
+                  "
+                  style={{
+                    background:
+                      "linear-gradient(135deg,#3B82F6,#1D4ED8)",
+                  }}
+                >
+                  <Check
+                    size={10}
+                    className="text-white"
+                    strokeWidth={3}
+                  />
+                </span>
+
+                <span className="text-gray-700 text-[15px] leading-7">
+                  {b}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </div>
     </div>
   );
 }

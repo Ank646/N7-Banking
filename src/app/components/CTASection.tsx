@@ -1,44 +1,91 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { useRef } from "react";
 
-function NewsletterStrip({ dark = true }: { dark?: boolean }) {
+interface CTABannerProps {
+  brand?: "CB7" | "N7";
+}
+
+export function CTABanner({ brand = "N7" }: CTABannerProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
-  const [email, setEmail] = useState("");
-
-  const bg = dark ? "bg-[#050C17]" : "bg-[#050C17]";
+  const isInView = useInView(ref, {
+    once: true,
+    margin: "-100px",
+  });
 
   return (
-    <section ref={ref} className={`${bg} py-16 border-t border-white/[0.06]`}>
-      <div className="container-custom">
+    <section
+      ref={ref}
+      className="relative overflow-hidden rounded-3xl bg-[#050C17]"
+    >
+      
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at left center, rgba(59,130,246,0.18), transparent 55%)",
+        }}
+      />
+
+      
+      <div
+        className="absolute right-0 top-1/2 pointer-events-none select-none"
+        style={{
+          fontSize: "32vw",
+          fontWeight: 900,
+          color: "rgba(59,130,246,0.05)",
+          lineHeight: 1,
+          letterSpacing: "-0.06em",
+          transform: "translateY(-50%) translateX(18%)",
+        }}
+        aria-hidden="true"
+      >
+        {brand}
+      </div>
+
+      
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute left-1/2 top-0 h-full w-px bg-blue-500" />
+        <div className="absolute right-1/4 top-0 h-full w-px bg-blue-500" />
+      </div>
+
+      <div className="relative z-10 px-8 md:px-12 lg:px-16 py-14 lg:py-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-          className="flex flex-col md:flex-row md:items-center justify-between gap-8"
+          transition={{ duration: 0.6 }}
+          className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10"
         >
-          <div>
-            <h3 className="text-2xl lg:text-3xl font-black text-white mb-1">
-              Take the full advantage of going paper-less now.
-            </h3>
-            <p className="text-slate-400 text-sm max-w-lg">
-              Join thousands of forward-thinking financial institutions already building the future with N7.
+          
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-3xl lg:text-[56px] font-semibold text-white leading-[1.1] mb-6">
+              Take the full advantage of
+              <br />
+              going paper-less now.
+            </h2>
+
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl">
+              {brand === "CB7"
+                ? "CB7 helps your financial institution improve the client experience, automate and optimize procedures, simplify banking operations."
+                : "N7 helps your financial institution improve the client experience, automate and optimize procedures, simplify banking operations."}
             </p>
           </div>
-          <div className="flex gap-3 flex-shrink-0">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="bg-white/[0.06] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500/50 w-64 min-w-0"
-            />
-            <a href="#" className="btn-primary inline-flex items-center gap-2 px-5 py-2.5 text-sm whitespace-nowrap flex-shrink-0">
-              Subscribe
-              <ArrowRight size={14} />
+
+          
+          <div className="flex flex-row flex-wrap gap-3 lg:flex-shrink-0">
+            <a
+              href="#"
+              className="inline-flex items-center justify-center h-12 min-w-[120px] rounded-lg border border-white/60 text-white text-xs font-semibold uppercase tracking-[0.15em] transition-all hover:border-white/60 hover:bg-white/5"
+            >
+              Contact Us
+            </a>
+
+            <a
+              href="#"
+              className="inline-flex items-center justify-center h-12 min-w-[120px] rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 text-white text-xs font-semibold uppercase tracking-[0.15em] transition-all hover:scale-[1.02]"
+            >
+              Request Demo
             </a>
           </div>
         </motion.div>
@@ -48,7 +95,9 @@ function NewsletterStrip({ dark = true }: { dark?: boolean }) {
 }
 
 export default function CTASection() {
-  return <NewsletterStrip />;
+  return (
+    <div className="w-full px-4 md:px-6 lg:px-8 py-12">
+      <CTABanner brand="N7" />
+    </div>
+  );
 }
-
-export { NewsletterStrip };
