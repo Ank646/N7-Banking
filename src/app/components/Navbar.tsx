@@ -1,112 +1,122 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Solutions", href: "#solutions" },
-  { label: "Products", href: "#products" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
-  { label: "Blog", href: "#blog" },
+  { label: "Solutions", href: "#solutions", hasDropdown: true },
+  { label: "Resources", href: "#resources", hasDropdown: true },
+  { label: "About Us", href: "#about", hasDropdown: false },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "backdrop-blur-xl bg-[#050C17]/85 border-b border-white/[0.06] shadow-lg shadow-black/20"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="container-custom">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <span className="relative flex items-center gap-1.5">
-                <span className="font-black text-2xl gradient-text tracking-tight">N7</span>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400" />
-                </span>
-              </span>
-            </a>
+      
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-[31px] pointer-events-none">
+        
+        <motion.nav
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="hidden md:grid items-center pointer-events-auto relative"
+          style={{
+            gridTemplateColumns: "1fr auto 1fr",
+            width: "716px",
+            height: "47px",
+            background: "#2F2F2FB2",
+            borderRadius: "12px",
+            padding: "0 16px",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          
+          <a href="/" className="flex-shrink-0 text-white font-bold text-lg tracking-tight">
+            N7
+          </a>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="relative px-4 py-2 text-sm text-slate-400 hover:text-white transition-colors duration-200 group"
-                >
-                  {link.label}
-                  <span className="absolute bottom-1 left-4 right-4 h-px bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                </a>
-              ))}
-            </nav>
-
-            {/* CTA */}
-            <div className="hidden md:flex items-center gap-3">
-              <a href="#" className="btn-primary text-sm inline-flex items-center gap-2 px-5 py-2.5">
-                Discover
+          
+          <div className="flex items-center gap-7">
+            {navLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="flex items-center gap-1 text-[11px] font-semibold tracking-widest uppercase text-white/80 hover:text-white transition-colors whitespace-nowrap"
+              >
+                {l.label}
+                {l.hasDropdown && <ChevronDown size={11} className="opacity-60" />}
               </a>
-            </div>
-
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            ))}
           </div>
-        </div>
-      </motion.header>
 
+          
+          <div className="flex justify-end">
+            <a
+              href="#"
+              className="inline-flex items-center justify-center px-4 py-1.5 rounded-lg border border-white/40 hover:border-white/70 text-white text-[11px] font-semibold tracking-widest uppercase transition-colors"
+            >
+              Request Demo
+            </a>
+          </div>
+        </motion.nav>
+
+        
+        <div
+          className="md:hidden flex items-center justify-between w-full pointer-events-auto px-6 py-3 mx-4 rounded-xl"
+          style={{
+            background: "#2F2F2FB2",
+            backdropFilter: "blur(12px)",
+            border: "1px solid rgba(255,255,255,0.08)",
+          }}
+        >
+          <a href="/" className="text-white font-bold text-lg tracking-tight">N7</a>
+          <button className="text-white/80 hover:text-white p-1" onClick={() => setOpen((v) => !v)}>
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </header>
+
+      
       <AnimatePresence>
-        {mobileOpen && (
+        {open && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-16 z-40 backdrop-blur-xl bg-[#050C17]/95 border-b border-white/[0.06] md:hidden"
+            exit={{ opacity: 0, y: -8 }}
+            className="fixed top-20 left-4 right-4 z-40 rounded-xl overflow-hidden md:hidden"
+            style={{ background: "#1C1C1CE6", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)" }}
           >
-            <div className="container-custom py-4 flex flex-col">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  onClick={() => setMobileOpen(false)}
-                  className="py-4 px-2 text-slate-300 hover:text-white border-b border-white/5 text-base font-medium transition-colors"
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-              <div className="mt-5 pb-2">
-                <a href="#" className="btn-primary text-sm text-center block py-3">Discover</a>
-              </div>
-            </div>
+            {navLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between px-5 py-4 text-white/80 hover:text-white text-sm font-semibold tracking-widest uppercase border-b border-white/[0.06] transition-colors"
+              >
+                {l.label}
+                {l.hasDropdown && <ChevronDown size={14} />}
+              </a>
+            ))}
+            <a
+              href="#"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center m-4 py-3 rounded-lg border border-white/30 text-white text-[11px] font-bold tracking-widest uppercase"
+            >
+              Request Demo
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
