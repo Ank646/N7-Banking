@@ -16,7 +16,7 @@ export default function BrandPatternSection() {
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* Left: text */}
+          
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -46,7 +46,7 @@ export default function BrandPatternSection() {
             </p>
           </motion.div>
 
-          {/* Right: N7 mark grid pattern */}
+          
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}

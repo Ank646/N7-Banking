@@ -16,7 +16,6 @@ const cardVariants = {
   }),
 };
 
-// Static uptime bars — deterministic to avoid hydration mismatch
 const UPTIME_BARS = Array.from({ length: 60 }, (_, i) => {
   if (i === 14) return "yellow";
   if (i === 42) return "red";
@@ -32,7 +31,7 @@ export default function FeaturesSection() {
   return (
     <section className="bg-gradient-to-b from-[#050C17] to-[#070E1C] py-24">
       <div className="container-custom" ref={ref}>
-        {/* Top heading */}
+        
         <div className="text-center mb-16">
           <span className="inline-block text-xs font-semibold tracking-widest text-blue-400 uppercase border border-blue-500/30 bg-blue-500/10 rounded-full px-4 py-1.5 mb-5">
             CAPABILITIES
@@ -50,10 +49,10 @@ export default function FeaturesSection() {
           </p>
         </div>
 
-        {/* Bento Grid */}
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
 
-          {/* Card 1 — API-First Architecture (col-span-2) */}
+          
           <motion.div
             custom={0}
             initial="hidden"
@@ -103,7 +102,7 @@ export default function FeaturesSection() {
             </div>
           </motion.div>
 
-          {/* Card 2 — Bank-grade Security */}
+          
           <motion.div
             custom={1}
             initial="hidden"
@@ -130,7 +129,7 @@ export default function FeaturesSection() {
             </div>
           </motion.div>
 
-          {/* Card 3 — AI-Powered */}
+          
           <motion.div
             custom={2}
             initial="hidden"
@@ -154,7 +153,7 @@ export default function FeaturesSection() {
             </span>
           </motion.div>
 
-          {/* Card 4 — Global Compliance (row-span-2) */}
+          
           <motion.div
             custom={3}
             initial="hidden"
@@ -190,7 +189,7 @@ export default function FeaturesSection() {
             </div>
           </motion.div>
 
-          {/* Card 5 — 99.99% Uptime SLA (col-span-2) */}
+          
           <motion.div
             custom={4}
             initial="hidden"
