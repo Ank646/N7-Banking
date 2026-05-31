@@ -59,13 +59,14 @@ export function CTABanner({ brand = "N7" }: CTABannerProps) {
         >
           
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-3xl lg:text-[56px] font-semibold text-white leading-[1.1] mb-6">
-              Take the full advantage of
-              <br />
-              going paper-less now.
+            <h2
+              className="font-semibold text-white leading-[1.1] mb-6"
+              style={{ fontSize: "clamp(1.6rem, 4vw, 3.5rem)", textWrap: "balance" } as React.CSSProperties}
+            >
+              Take the full advantage of going paper-less now.
             </h2>
 
-            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl">
+            <p className="text-slate-400 text-sm leading-relaxed max-w-md">
               {brand === "CB7"
                 ? "CB7 helps your financial institution improve the client experience, automate and optimize procedures, simplify banking operations."
                 : "N7 helps your financial institution improve the client experience, automate and optimize procedures, simplify banking operations."}

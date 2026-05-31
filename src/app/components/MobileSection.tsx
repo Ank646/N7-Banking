@@ -49,6 +49,9 @@ const rows = [
 export default function MobileSection() {
   const leftRef = useRef(null);
   const leftInView = useInView(leftRef, { once: true, margin: "-60px" });
+  // separate ref for desktop sticky column so mobile ref isn't overwritten
+  const desktopLeftRef = useRef(null);
+  const desktopLeftInView = useInView(desktopLeftRef, { once: true, margin: "-60px" });
 
   return (
     <div>
@@ -124,9 +127,9 @@ export default function MobileSection() {
 
             
             <motion.div
-              ref={leftRef}
+              ref={desktopLeftRef}
               initial={{ opacity: 0, x: -20 }}
-              animate={leftInView ? { opacity: 1, x: 0 } : {}}
+              animate={desktopLeftInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
               className="relative z-10 px-8 lg:pl-16 lg:pr-8 pt-20 pb-10 border-r border-gray-100 lg:sticky lg:top-20 lg:self-start"
             >
@@ -187,7 +190,7 @@ function PhoneRow({
       ref={ref}
       className="relative"
     >
-      <div className="grid grid-cols-2 items-center min-h-[520px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 items-center min-h-0 md:min-h-[420px]">
 
         
         <motion.div
